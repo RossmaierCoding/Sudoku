@@ -42,12 +42,17 @@ def generate_sudoku():
     solve_sudoku(board)
     return board
 
+def print_sudoku(board):
+    for i in range(0,9):
+            print(board[i][0],board[i][1],board[i][2],board[i][3],board[i][4],board[i][5],board[i][6],board[i][7],board[i][8],sep=' ')
+
+
 def sudoku_to_tensor(board_2d):
     tensor = [[[[0 for _ in range(3)] for _ in range(3)] for _ in range(3)] for _ in range(3)]
     for r in range(9):
         for c in range(9):
-            br, bc = r // 3, c // 3      # big row, big col
-            cr, cc = r % 3, c % 3        # cell row, cell col
+            br, cr = r // 3, c // 3      # cell row, cell col
+            bc, cc = r % 3, c % 3        # big row, big col
             tensor[br][bc][cr][cc] = board_2d[r][c]
     return tensor
 
@@ -171,7 +176,8 @@ def make_puzzle_field(field, clues=30):
 
    
 def gen_puzzle():
-    board_2d = generate_sudoku()  # from earlier
+    board_2d = generate_sudoku() # from earlier
+    print_sudoku(board_2d)
     sfield = sudoku_to_tensor(board_2d)
     print_field(sfield)
     sfield = make_puzzle_field(sfield)
